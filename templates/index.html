@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI Spam Detector</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <a href="/" class="back-btn">
+            ← Kembali ke Beranda
+        </a>
+
+        <h1>🛡 AI Spam Detector</h1>
+
+        <form action="/predict"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <textarea
+                name="text"
+                placeholder="Masukkan teks..."
+                required>{{ text if text else '' }}</textarea>
+
+            <div class="upload-box">
+
+                <label>Upload DOCX File</label>
+
+                <input
+                    type="file"
+                    name="file"
+                    accept=".docx">
+
+            </div>
+
+            <button type="submit">
+                Deteksi Spam
+            </button>
+
+        </form>
+
+        {% if prediction %}
+
+        <div class="result">
+
+            <h2>Hasil Prediksi</h2>
+
+            <div class="badge">
+                {{ prediction.upper() }}
+            </div>
+
+            <p>
+                Spam Probability:
+                {{ spam_prob }}%
+            </p>
+
+            <p>
+                Non-Spam Probability:
+                {{ nonspam_prob }}%
+            </p>
+
+        </div>
+
+        {% if tfidf_result %}
+
+        <div class="tfidf-box">
+
+            <h2>Top TF-IDF Terms</h2>
+
+            <table class="tfidf-table">
+
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Bobot TF-IDF</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in tfidf_result %}
+
+                    <tr>
+                        <td>{{ item.term }}</td>
+                        <td>{{ item.weight }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% endif %}
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

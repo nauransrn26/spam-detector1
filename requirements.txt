@@ -1,0 +1,8 @@
+Flask
+gunicorn
+joblib
+scikit-learn
+numpy
+scipy
+python-docx
+Sastrawi
